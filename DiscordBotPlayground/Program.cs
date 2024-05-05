@@ -1,9 +1,8 @@
-﻿using DSharpPlus;
+﻿using DiscordBotPlayground.Commands;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using Microsoft.Extensions.Configuration;
 
-
-//CommandsNextExtension Commands = null;
 
 IConfigurationRoot config = new ConfigurationBuilder()
     .AddUserSecrets<Program>()
@@ -24,11 +23,23 @@ DiscordClient Client = new DiscordClient(discordConfig);
 
 Client.Ready += Client_Ready;
 
+var commandsConfig = new CommandsNextConfiguration()
+{
+    StringPrefixes = new string[] { prefix },
+    EnableMentionPrefix = true,
+    EnableDms = true,
+    EnableDefaultHelp = true,
+};
+
+CommandsNextExtension Commands = Client.UseCommandsNext(commandsConfig);
+
+Commands.RegisterCommands<TestCommands>();
 await Client.ConnectAsync();
 await Task.Delay(-1);
 
 
 Task Client_Ready(DiscordClient sender, DSharpPlus.EventArgs.ReadyEventArgs args)
 {
+    Console.WriteLine(Client.CurrentUser.Username);
     return Task.CompletedTask;
 }
