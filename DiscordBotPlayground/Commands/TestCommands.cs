@@ -13,7 +13,6 @@ namespace DiscordBotPlayground.Commands
         [Command("hello")]
         public async Task Hello(CommandContext ctx)
         {
-            await Task.Delay(5000);
             await ctx.Channel.SendMessageAsync("У, я, hello, мир");
         }
 

@@ -2,6 +2,7 @@
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 
 IConfigurationRoot config = new ConfigurationBuilder()
@@ -28,12 +29,14 @@ var commandsConfig = new CommandsNextConfiguration()
     StringPrefixes = new string[] { prefix },
     EnableMentionPrefix = true,
     EnableDms = true,
-    EnableDefaultHelp = true,
+    EnableDefaultHelp = false,
 };
 
 CommandsNextExtension Commands = Client.UseCommandsNext(commandsConfig);
 
-Commands.RegisterCommands<TestCommands>();
+Commands.RegisterCommands(Assembly.GetExecutingAssembly());
+
+
 await Client.ConnectAsync();
 await Task.Delay(-1);
 
