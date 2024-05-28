@@ -1,6 +1,8 @@
 ﻿using DiscordBotPlayground.Commands;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Extensions;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
@@ -21,6 +23,11 @@ var discordConfig = new DiscordConfiguration()
 };
 
 DiscordClient Client = new DiscordClient(discordConfig);
+
+Client.UseInteractivity(new InteractivityConfiguration()
+{
+    Timeout = TimeSpan.FromMinutes(2)
+});
 
 Client.Ready += Client_Ready;
 
